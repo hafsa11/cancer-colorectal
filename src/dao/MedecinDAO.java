@@ -1,0 +1,66 @@
+package dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+
+import dao.entities.Medecin;
+
+public class MedecinDAO {
+	private final String  PU_NAME = "CHU";
+    private EntityManagerFactory factory = null;
+
+	
+    
+	public MedecinDAO() {
+		factory = Persistence.createEntityManagerFactory(PU_NAME);
+	}
+
+	
+	private EntityManager newEntityManager(){
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        return em;
+    }
+    
+    private void closeEntityManager(EntityManager em){
+        if(em != null){
+            if(em.isOpen()){
+                EntityTransaction trs = em.getTransaction();
+                if(trs.isActive()){
+                    trs.commit();
+                }
+                em.close();
+            }
+        }
+    }
+    public Medecin anthentification(String login, String password){
+        EntityManager em = this.newEntityManager();
+        try {
+            TypedQuery<Medecin> query = em.createQuery("SELECT p FROM Medecin p  WHERE p.login = :log AND p.password = :pass", Medecin.class);
+            query.setParameter("log", login);
+            query.setParameter("pass", password);
+            Medecin med = query.getSingleResult();
+            this.closeEntityManager(em);
+            return med;
+        } catch (NoResultException e) {
+            System.out.println("Erreur authentification "+ e.getMessage());
+            this.closeEntityManager(em);
+            return null;
+        }
+    }
+    public List<Medecin> listerLesMedecin(){
+        EntityManager em = this.newEntityManager();
+        TypedQuery<Medecin> query = em.createQuery("SELECT a FROM Medecin a", Medecin.class);
+        List<Medecin> hopitaux= query.getResultList();
+        this.closeEntityManager(em);
+        return hopitaux;
+    }
+	
+}
