@@ -277,7 +277,7 @@ public class Controller extends HttpServlet {
 			String password = request.getParameter("password");
 			Utilisateur user = (new UtilisateurDAO()).authentification(login, password);
 			if (user != null) {
-				System.out.println("im user");
+				System.out.println("hello im user without role");
 				if (user instanceof Infirmier) {
 					System.out.println("im instance of infermier");
 					HttpSession session = request.getSession(true);
