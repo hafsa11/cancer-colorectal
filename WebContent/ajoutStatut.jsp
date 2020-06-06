@@ -92,7 +92,7 @@
                                                          <% 
                                                          for(TypeStatut statut : statuts ){
 				                                		%>	
-				                                			    <option value ="<%=statut.getId() %>"><%=statut %></option>
+				                                			    <option value ="<%=statut.getId() %>"><%=statut.getTypeCancer() %></option>
 				                                		<% 
 				                                			}
 				                                		%> 

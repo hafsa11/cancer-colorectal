@@ -132,9 +132,10 @@ public class TraitementDAO {
 	    public Traitement trouverTumeurById(int id){
 			EntityManager em = this.newEntityManager();
 			Traitement categorie = em.find(Traitement.class, id);
-	        
+	        System.out.println("traitement");
 	        this.closeEntityManager(em);
 	        return categorie;
 			
 		}
+	    
 }

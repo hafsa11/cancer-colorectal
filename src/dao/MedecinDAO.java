@@ -47,6 +47,8 @@ public class MedecinDAO {
             query.setParameter("log", login);
             query.setParameter("pass", password);
             Medecin med = query.getSingleResult();
+            System.out.println("---------------------MedecinDAO----------------");
+            System.out.println("admin conn = "+med);
             this.closeEntityManager(em);
             return med;
         } catch (NoResultException e) {

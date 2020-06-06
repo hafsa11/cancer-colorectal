@@ -176,10 +176,18 @@ public class Traitement implements Serializable {
 	    }
 
 
+
+
+
 		@Override
 		public String toString() {
-			return "Traitement [date=" + date + ", indication=" + indication + "]";
+			return "Traitement [id_Trait=" + id_Trait + ", date=" + date + ", indication=" + indication + ", chirurgie="
+					+ chirurgie + ", TraitEndo=" + TraitEndo + ", chimiotherapie=" + chimiotherapie + ", radiotherapie="
+					+ radiotherapie + ", hopital=" + hopital + ", dossier=" + dossier + "]";
 		}
+
+
+		
 	    
 	    
 }

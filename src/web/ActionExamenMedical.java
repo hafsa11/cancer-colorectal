@@ -27,7 +27,6 @@ public class ActionExamenMedical {
 	}
 	public String rechercheDossier(){
 		String nom = request.getParameter("famille");
-		System.out.println("nom de famille :"+nom);
 		BeanDossier bean =  new BeanDossier();
 //		bean.setId(id_Famille);
 		bean.setDossiers(dosDAO.listeDossierByNonFamille(nom));
@@ -57,4 +56,16 @@ public class ActionExamenMedical {
 		this.response = response;
 	}
 	
+	public String examEndoDetail() {
+		String idEndo = request.getParameter("id");
+		HttpSession session = request.getSession();
+		session.setAttribute("idEndo", idEndo);
+		return "/endoDetail.jsp";	
+	}
+	public String examPolyDetail() {
+		String idPoly = request.getParameter("id");
+		HttpSession session = request.getSession();
+		session.setAttribute("idPoly", idPoly);
+		return "/polyDetail.jsp";	
+	}
 }

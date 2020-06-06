@@ -37,6 +37,7 @@ import dao.ExamenPreOpAnormalDAO;
 import dao.ExamenPreOpDAO;
 import dao.FamilleDAO;
 import dao.FormeDAO;
+import dao.GenetiqueDAO;
 import dao.GesteDAO;
 import dao.HopitalDAO;
 import dao.ImagerieDAO;
@@ -161,6 +162,8 @@ public class Controller extends HttpServlet {
 	private TraitementDAO traitDAO;
 	private ActionsTraitement traitement;
 	private ActionFamille actionFamille;
+	private ActionGenetique genetique;
+	private GenetiqueDAO genDAO;
 
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
@@ -210,7 +213,7 @@ public class Controller extends HttpServlet {
 		scoringDAO = new RRscoringDAO();
 		typInterDAO = new TypeInterventionDAO();
 		traitDAO = new TraitementDAO();
-
+		genDAO = new GenetiqueDAO();
 		// les actions
 		actionIndividu = new ActionsIndividu(familleDAO, indDAO, motifDAO, dosDAO);
 		actionStatut = new ActionStatut(familleDAO, indDAO, statutDAO, typeDAO, siteDAO, formeDAO, priseDAO,
@@ -228,6 +231,7 @@ public class Controller extends HttpServlet {
 		traitement = new ActionsTraitement(typeExDAO, elargDAO, gestDAO, scoringDAO, compDAO, typInterDAO, dosDAO,
 				hopDAO, traitDAO);
 		actionFamille = new ActionFamille(familleDAO, indDAO, dosDAO);
+		genetique = new ActionGenetique(dosDAO, hopDAO, genDAO);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -265,7 +269,10 @@ public class Controller extends HttpServlet {
 
 		imagerie.setRequest(request);
 		imagerie.setResponse(response);
-
+		
+		genetique.setRequest(request);
+		genetique.setResponse(response);
+		
 		traitement.setRequest(request);
 		traitement.setResponse(response);
 
@@ -277,34 +284,53 @@ public class Controller extends HttpServlet {
 			String password = request.getParameter("password");
 			Utilisateur user = (new UtilisateurDAO()).authentification(login, password);
 			if (user != null) {
-				System.out.println("hello im user without role");
 				if (user instanceof Infirmier) {
-					System.out.println("im instance of infermier");
+
 					HttpSession session = request.getSession(true);
 					session.setAttribute("nom", user.getNom());
 					session.setAttribute("prenom", user.getPrenom());
 					vue = "/espaceUtilisateur.jsp";
 				}
-				if (user != null && user instanceof Medecin) {
+				if (user instanceof Medecin) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("nom", user.getNom());
 					session.setAttribute("prenom", user.getPrenom());
-					vue = "/espaceUtilisateur.jsp";
+					vue = "/espaceMedecin.jsp";
 				}
-				if (user != null && user instanceof Administrateur) {
+				if (user instanceof Administrateur) {
 					System.out.println("kikou im admin");
 					HttpSession session = request.getSession(true);
 					session.setAttribute("nom", user.getNom());
 					session.setAttribute("prenom", user.getPrenom());
 					vue = "/espaceAdmin.jsp";
 				}
-				System.out.println("conneted user == " + user);
 //			response.getWriter().append("conneted user == "+user).append(request.getContextPath());
 			} else {
 				vue = "/index.jsp";
 			}
-		} else if (actionKey.equalsIgnoreCase("ajoutFamille")) {
+		}
+		if (actionKey.equalsIgnoreCase("Registre")) {
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String email = request.getParameter("email");
+			String login = request.getParameter("email");
+			String pwd = request.getParameter("password");
+			Utilisateur newUser = new Infirmier(nom, prenom, email, login, pwd);
+			System.out.println(newUser);
+			if ((new UtilisateurDAO()).creerNouveauCompte(newUser)) {
+				vue = "/espaceUtilisateur.jsp";
+			} else {
+				vue = "/index.jsp";
+			}
 
+		} else if (actionKey.equalsIgnoreCase("logout")) {
+			/*
+			 * HttpSession session = request.getSession(false); if(session != null)
+			 * session.invalidate();
+			 * request.getRequestDispatcher("/index.jsp").forward(request,response);
+			 */
+			System.out.println("coucou im logout");
+		} else if (actionKey.equalsIgnoreCase("ajoutFamille")) {
 			vue = actionIndividu.ajoutFamille();
 		} else if (actionKey.equalsIgnoreCase("ajoutIndividu")) {
 
@@ -347,7 +373,6 @@ public class Controller extends HttpServlet {
 
 			vue = actionIndividu.ajoutConsentement();
 		} else if (actionKey.equalsIgnoreCase("ajoutRendezVous")) {
-
 			vue = rendezVous.ajoutRendezVous();
 
 		} else if (actionKey.equalsIgnoreCase("ajoutDossier")) {
@@ -493,31 +518,48 @@ public class Controller extends HttpServlet {
 			vue = actionIndividu.modIndividuTrait();
 		} else if (actionKey.equalsIgnoreCase("compInd")) {
 			vue = actionIndividu.compInd();
-		} else if (actionKey.equalsIgnoreCase("")) {
+		} else if (actionKey.equalsIgnoreCase("modRendezVous")) {
+			vue = rendezVous.modRendezVous();
+		} else if (actionKey.equalsIgnoreCase("detailStatut")) {
+			vue = actionStatut.detailStatut();
+		} else if (actionKey.equalsIgnoreCase("modStatut")) { // pour l'affichage du page jsp
+			vue = actionStatut.modStatut();
+		} else if (actionKey.equalsIgnoreCase("consEndoscopieNormal")) {
+			vue = examenMedical.examEndoDetail();
+		} else if (actionKey.equalsIgnoreCase("consPolype")) {
+			vue = examenMedical.examPolyDetail();
+		} else if (actionKey.equalsIgnoreCase("modExamenPre")) {
 
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
-		} else if (actionKey.equalsIgnoreCase("")) {
-
+		} else if (actionKey.equalsIgnoreCase("modifierStatut")) {
+			vue = actionStatut.modifierStatut();
+		} else if (actionKey.equalsIgnoreCase("modExamPre")) {
+			vue = examenClinique.modExamePre();
+		} else if (actionKey.equalsIgnoreCase("consTraitement")) {
+			vue = traitement.consulTraitement();
 		}
+		
+		else if (actionKey.equalsIgnoreCase("consImagerie")) {
+			vue = imagerie.getImagerie();
+		}else if (actionKey.equalsIgnoreCase("consBiologie")) {
+			vue = biologie.consultBiologie();
+		}else if (actionKey.equalsIgnoreCase("ajoutGenetique")) {
+			vue = genetique.ajoutGenetique();
+		}
+		else if (actionKey.equalsIgnoreCase("modGen")) {
+			vue = genetique.modGen();
+		}else if (actionKey.equalsIgnoreCase("consGenetique")) {
+			vue = genetique.consultGenetique();
+		}
+		else if (actionKey.equalsIgnoreCase("modGenetique")) {
+			vue = genetique.modGenetiqueTrait();
+		}
+		
+		
 		RequestDispatcher dispatcher;
 		dispatcher = request.getRequestDispatcher(vue);
 		dispatcher.forward(request, response);
 //        this.getServletContext().getRequestDispatcher(vue).forward(request, response);
 
-		System.out.println("Hi !!");
 	}
 
 	/**

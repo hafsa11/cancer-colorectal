@@ -169,6 +169,7 @@ public class DossierDAO {
 	 public List<Biologie> listerBiologieParPatient(int id_patient){
 	        EntityManager em = this.newEntityManager();
 	        Individu patient = em.find(Individu.class, id_patient);
+	        System.out.println("patient "+patient);
 	        TypedQuery<Biologie> requete = em.createQuery("SELECT DISTINCT e FROM Biologie e  JOIN e.dossier d JOIN d.patient p Where p.id_Individu =:iid", Biologie.class);
 	        requete.setParameter("iid", patient.getId());
 	        List<Biologie> examens = requete.getResultList();
@@ -243,7 +244,7 @@ public class DossierDAO {
 	        return examens;
 	    }
 	 public List<Traitement> listerTraitementParPatient(int id_patient){
-		 EntityManager em = this.newEntityManager();
+		    EntityManager em = this.newEntityManager();
 	        Individu patient = em.find(Individu.class, id_patient);
 	        TypedQuery<Traitement> requete = em.createQuery("SELECT DISTINCT e FROM Traitement e  JOIN e.dossier d JOIN d.patient p Where p.id_Individu =:iid", Traitement.class);
 	        requete.setParameter("iid", patient.getId());

@@ -281,8 +281,14 @@ public class StatutCancereux implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StatutCancereux [typeStatut=" + typeStatut + "]";
+		return "StatutCancereux [id_Statut=" + id_Statut + ", typeStatut=" + typeStatut + ", annee=" + annee + ", age="
+				+ age + ", forme=" + forme + ", type=" + type + ", site=" + site + ", t=" + t + ", m=" + m + ", n=" + n
+				+ ", priseEncharge=" + priseEncharge + ", individus=" + individus + "]";
 	}
+
+
+
+	
 
     
     

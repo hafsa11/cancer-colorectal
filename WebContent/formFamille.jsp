@@ -64,7 +64,7 @@
 								int  idFamille = Integer.parseInt(id_Famille);
 								FamilleDAO famDAO= new FamilleDAO();
 								Famille famille =  famDAO.trouverFamilleById(idFamille);
-	                        %>
+								  %>
                         	<div class="form-group">
                                     
                                     <input type="hidden" class="form-control" name="idAncienFamille" value = "<%=famille.getId() %>" placeholder="">
@@ -82,7 +82,7 @@
 							            	diagnostics = diagDAO.listerDiagnostic();
 							         %>
                                     	<select class="form-control" name="diagnostic">
-                                    	<option><%=famille.getDiagnostic() %></option>
+                                    	<option value="<%=famille.getDiagnostic().getId()%>"><%=famille.getDiagnostic() %></option>
                                     	 <% 
                                 			for(SyndromeFamille diag : diagnostics){
                                 			%>

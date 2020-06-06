@@ -35,6 +35,20 @@ public class Genetique extends ExamenMedical{
 		super();
 		
 	}
+	
+	public Genetique(Hopital hopital, DossierMedicale dossier, int numeroDossierGenetique,
+			InstMacro instabiliteMacroscopique, Boolean mutaBRAF, Resultat mutaKras, Boolean mutaAPC, Boolean mutaMYH,
+			 String autre) {
+		super(hopital, dossier);
+		this.numeroDossierGenetique = numeroDossierGenetique;
+		this.instabiliteMacroscopique = instabiliteMacroscopique;
+		this.mutaBRAF = mutaBRAF;
+		this.mutaKras = mutaKras;
+		this.mutaAPC = mutaAPC;
+		this.mutaMYH = mutaMYH;
+		this.autre = autre;
+	}
+
 	public int getNumeroDossierGenetique() {
 		return numeroDossierGenetique;
 	}
@@ -82,6 +96,13 @@ public class Genetique extends ExamenMedical{
 	}
 	public void setAutre(String autre) {
 		this.autre = autre;
+	}
+
+	@Override
+	public String toString() {
+		return "Genetique [numeroDossierGenetique=" + numeroDossierGenetique + ", instabiliteMacroscopique="
+				+ instabiliteMacroscopique + ", mutaBRAF=" + mutaBRAF + ", mutaKras=" + mutaKras + ", mutaAPC="
+				+ mutaAPC + ", mutaMYH=" + mutaMYH + ", autre=" + autre + "]";
 	}
     
 }

@@ -44,6 +44,7 @@ public class InfirmierDao {
             query.setParameter("log", login);
             query.setParameter("pass", password);
             Infirmier inf = query.getSingleResult();
+            System.out.println("---------------------InfirmierDAO----------------");
             System.out.println("inf conn = "+inf);
             this.closeEntityManager(em);
             return inf;

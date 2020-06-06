@@ -1,9 +1,12 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
 <%@ page import="dao.*" %>
 <%@ page import="dao.entities.*" %>
 <%@ page import="beans.*" %>
+<%@ page import="dao.entities.Deroulement.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -71,27 +74,28 @@
 										<div class="col-md-7 col-lg-offset-3">
 										<div class="panel-body">
 											<%
-												String id_Dossier = (String)session.getAttribute("idDossier");
-												int  idDossier = Integer.parseInt(id_Dossier);
-												DossierDAO dosDAO = new DossierDAO();
-												DossierMedicale dos = dosDAO.trouverDossierById(idDossier);
-												
-												Traitement examen = (Traitement)session.getAttribute("Traitement");
-											
+											String id_trait = (String)session.getAttribute("idTrait");
+											int  idTrait = Integer.parseInt(id_trait);
+											TraitementDAO traitDAO = new TraitementDAO();
+											Traitement examen = traitDAO.trouverTumeurById(idTrait);
+											Date date = examen.getDate();
+											SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+											SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yyyy");
+											String dateFormatee = formatDateJour.format(date);
 											%>
 		                                    <div class="form-group">
-		                                         <input type="hidden" class="form-control" name="dossier" value="<%=dos.getId()%>"  style="width:250px">
+		                                         <input type="hidden" class="form-control" name="dossier" value="<%=examen.getDossier().getId() %>"  style="width:250px">
 		                                    </div>
 		                                    <div class="form-group">
-		                                         <input type="hidden" class="form-control" name="idImagerie" value="<%=examen.getId()%>"  style="width:250px">
+		                                         <input type="hidden" class="form-control" name="idTrait" id="idTrait" value="<%=examen.getId()%>"  style="width:250px">
 		                                    </div>
 		                                    <div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date de traitement :</label>
-	                                                <input type="text" class="form-control" name="dateTrait" id="" placeholder="" style="width:250px">
+	                                                <input type="text" class="form-control" name="dateTrait" id="" value="<%=dateFormatee%>" style="width:250px">
 	                                            </div>
 		                                    <div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Indication</label>
-	                                                <input type="text" class="form-control" name="indication" id="" placeholder="" style="width:250px"> 
+	                                                <input type="text" class="form-control" name="indication" id="" value="<%=examen.getIndication()%>" style="width:250px"> 
 	                                               
 	                                            </div>
 	                                            
@@ -102,13 +106,14 @@
 											            	HopitalDAO hopDAO = new HopitalDAO();
 											            	List<Hopital> hopitaux = new ArrayList<>();
 											            	hopitaux=hopDAO.listerLesHopitaux();
+											            	System.out.println("hopitaux :"+hopitaux);
 											            %>
 											            
 														<select class="form-control" name="hopital" style="width:250px" required>
 														<% 
 				                                			for(Hopital hop : hopitaux ){
 				                                		%>	
-				                                			    <option value ="<%=hop.getId() %>"><%=hop %></option>
+				                                			    <option value ="<%=hop.getId() %>"><%=hop.getHopital() %></option>
 				                                		<% 
 				                                			}
 				                                		%>  
@@ -120,16 +125,16 @@
 	                                    	
 	                                    	<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >en temps</label>
-	                                                <input type="text" class="form-control" name="temps" id="" placeholder="" style="width:250px"> 
+	                                                <input type="text" class="form-control" name="temps" id="" value="<%=examen.getChirurgie().getTemps() %>" style="width:250px"> 
 	                                               
 	                                            </div>
 	                                    	<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date:</label>
-	                                                <input type="text" class="form-control" name="date" id="" placeholder="" style="width:250px">
+	                                                <input type="text" class="form-control" name="date" id="" value="<%=dateFormatee %>" style="width:250px">
 	                                            </div>
 	                                       	<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Service:</label>
-	                                                <input type="text" class="form-control" name="service"  placeholder="" style="width:250px">
+	                                                <input type="text" class="form-control" name="service"  value="<%=examen.getChirurgie().getService() %>" style="width:250px">
 	                                            </div>
 	                                       
 	                                       
@@ -146,7 +151,7 @@
 	                                                        <%
 	                                                        	for(TypeExerese type : types){
 	                                                        %>
-							                               <option value="<%=type.getId() %>"><%=type %></option>
+							                               <option value="<%=type.getId() %>"><%=type.getTypeExerese() %></option>
 							                              <%
 	                                                        	}
 							                              %>
@@ -157,28 +162,25 @@
 	                                                <label class="col-sm-4 control-label">Elargie à:</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="elargissement">
-	                                                    <option></option>
 	                                                    <%
 	                                                    ElargissementDAO elargDAO = new ElargissementDAO();
 	                                                    List<Elargissement> elargies = new ArrayList<>();
 	                                                    elargies = elargDAO.listerLesElargissement();
-	                                                    
 	                                                    %>
 	                                                        <%
 	                                                        	for(Elargissement elarg : elargies){
 	                                                        %>
-							                               <option value="<%=elarg.getId() %>"><%=elarg %></option>
+							                               <option value="<%=elarg.getId() %>"><%=elarg.getElargie() %></option>
 							                              <%
 	                                                        	}
 							                              %>
 	                                                    </select>
 	                                                </div>
 	                                            </div>
-	                                             <div class="form-group">
+	                                           <div class="form-group">
 	                                                <label class="col-sm-4 control-label">Gestes Complémentaires:</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="geste">
-	                                                    <option></option>
 	                                                    <%
 	                                                    GesteDAO gestDAO = new GesteDAO();
 	                                                    List<Geste> gestes = new ArrayList<>();
@@ -199,17 +201,15 @@
 	                                                <label class="col-sm-4 control-label">RR scoring:</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="scoring">
-	                                                    <option></option>
 	                                                    <%
 	                                                    RRscoringDAO scoringDAO = new RRscoringDAO();
 	                                                    List<RRscoring> scoring = new ArrayList<>();
 	                                                    scoring = scoringDAO.listerRRscoring();
-	                                                    
 	                                                    %>
 	                                                        <%
 	                                                        	for(RRscoring scor : scoring){
 	                                                        %>
-							                               <option value="<%=scor.getId() %>"><%=scor %></option>
+							                               <option value="<%=scor.getId() %>"><%=scor.getScoring() %></option>
 							                              <%
 	                                                        	}
 							                              %>
@@ -218,23 +218,21 @@
 	                                            </div>
 												<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Ref Ana-path:</label>
-	                                                <input type="text" class="form-control" name="refChirg"   style="width:250px">
+	                                                <input type="text" class="form-control" name="refChirg" value="<%=examen.getChirurgie().getRefAnaPath() %>"  style="width:250px">
 	                                            </div>
 	                                            <div class="form-group">
 	                                                <label class="col-sm-4 control-label">Complication:</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="complicationChirurg">
-	                                                    <opition></opition>
 	                                                    <%
 	                                                    ComplicationDAO compDAO = new ComplicationDAO();
 	                                                    List<Complication> complications = new ArrayList<>();
 	                                                    complications = compDAO.listerLesComplication();
-	                                                    
 	                                                    %>
 	                                                        <%
 	                                                        	for(Complication comp : complications){
 	                                                        %>
-							                               <option value="<%=comp.getId() %>"><%=comp %></option>
+							                               <option value="<%=comp.getId() %>"><%=comp.getComplication() %></option>
 							                             <%} %>
 	                                                    </select>
 	                                                </div>
@@ -249,17 +247,15 @@
 	                                                <label class="col-sm-4 control-label">Type d'intervention</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="typeInterv">
-	                                                    <option></option>
 	                                                    <%
 	                                                    TypeInterventionDAO typeIntDAO = new TypeInterventionDAO();
 	                                                    List<TypeIntervention> interventions = new ArrayList<>();
 	                                                    interventions = typeIntDAO.listerTypeIntervention();
-	                                                    
 	                                                    %>
 	                                                        <%
 	                                                        	for(TypeIntervention interv : interventions){
 	                                                        %>
-							                               <option value="<%=interv.getId() %>"><%=interv %></option>
+							                               <option value="<%=interv.getId() %>"><%=interv.getIntervention() %></option>
 							                             <%} %>
 	                                                    </select>
 	                                                </div>
@@ -268,18 +264,20 @@
 	                                            
 												<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Ref Ana-path:</label>
-	                                                <input type="text" class="form-control" name="refTrait"  placeholder="degre" style="width:250px">
+	                                                <input type="text" class="form-control" name="refTrait"  placeholder="degre" value="<%=examen.getTraitEndo().getRefAnaPath() %>" style="width:250px">
 	                                            </div>
 	                                            <div class="form-group">
 	                                                <label class="col-sm-4 control-label">Complication:</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="complicationTrait">
-	                                                    <opition></opition>
-	                                                    
+	                                                     <%
+	                                                    complications = compDAO.listerLesComplication();
+	                                                    System.out.println("complications 2 :"+complications);
+	                                                    %>
 	                                                        <%
 	                                                        	for(Complication comp : complications){
 	                                                        %>
-							                               <option value="<%=comp.getId() %>"><%=comp %></option>
+							                               <option value="<%=comp.getId() %>"><%=comp.getComplication() %></option>
 							                             <%} %>
 	                                                    </select>
 	                                                </div>
@@ -293,7 +291,6 @@
 	                                                <label class="col-sm-4 control-label">Deroulement</label>
 	                                                <div class="col-sm-8">
 	                                                    <select class="form-control" name="deroulementChim">
-	                                                   
 							                               <option value=""><%=Deroulement.ADJUVANTE %></option>
 							                               <option value=""><%=Deroulement.NEO_ADJUVANTE%></option>
 							                               <option value=""><%=Deroulement.PALLIATIVE %></option>
@@ -303,11 +300,11 @@
 	                                            </div>
 												<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date de début :</label>
-	                                                <input type="text" class="form-control" name="dateDebutChim" id="" placeholder="<%=examen.getChimiotherapie().getDebut() %>" style="width:250px">
+	                                                <input type="text" class="form-control" name="dateDebutChim" id="" <c:if test="${not empty examen.getChimiotherapie()}"> value="<%=examen.getChimiotherapie().getDebut() %>" </c:if> style="width:250px">
 	                                            </div>
 	                                            <div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date de fin:</label>
-	                                                <input type="text" class="form-control" name="dateFinChim" id="" placeholder="<%=examen.getChimiotherapie().getFin() %>" style="width:250px">
+	                                                <input type="text" class="form-control" name="dateFinChim" id="" <c:if test="${not empty examen.getChimiotherapie()}"> value="<%=examen.getChimiotherapie().getFin() %>" </c:if> style="width:250px">
 	                                            </div>
 	                                            
 	                                    </div>
@@ -328,11 +325,12 @@
 	                                            </div>
 												<div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date de début :</label>
-	                                                <input type="text" class="form-control" name="dateDebutRad" id="" placeholder="<%=examen.getRadiotherapie().getDebut() %>" style="width:250px">
+	                                               
+	                                                <input type="text" class="form-control" name="dateDebutRad" id="" <c:if test="${not empty examen.getRadiotherapie()}"> value="<%=examen.getRadiotherapie().getDebut() %>" </c:if>  style="width:250px">
 	                                            </div>
 	                                            <div class="form-group">
 	                                                <label for="" class="col-sm-4 control-label" >Date de fin:</label>
-	                                                <input type="text" class="form-control" name="dateFinRad" id="" placeholder="<%=examen.getRadiotherapie().getFin() %>" style="width:250px">
+	                                                <input type="text" class="form-control" name="dateFinRad" id="" <c:if test="${not empty examen.getRadiotherapie()}"> value="<%=examen.getRadiotherapie().getFin() %>" </c:if> style="width:250px">
 	                                            </div>
 	                                    </div>
 										</br></br>

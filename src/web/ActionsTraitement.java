@@ -46,24 +46,28 @@ public class ActionsTraitement {
 	private DossierDAO dosDAO;
 	private HopitalDAO hopDAO;
 	private TraitementDAO traitDAO;
+
 	public ActionsTraitement() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public HttpServletRequest getRequest() {
 		return request;
 	}
+
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
+
 	public HttpServletResponse getResponse() {
 		return response;
 	}
+
 	public void setResponse(HttpServletResponse response) {
 		this.response = response;
 	}
-	
-	
+
 	public ActionsTraitement(TypeExereseDAO typeExDAO, ElargissementDAO elargDAO, GesteDAO gestDAO,
 			RRscoringDAO scoringDAO, ComplicationDAO compDAO, TypeInterventionDAO typInterDAO, DossierDAO dosDAO,
 			HopitalDAO hopDAO, TraitementDAO traitDAO) {
@@ -78,19 +82,20 @@ public class ActionsTraitement {
 		this.hopDAO = hopDAO;
 		this.traitDAO = traitDAO;
 	}
-	public String ajoutTraitement(){
-		String doss= request.getParameter("dossier");
-		String indicat= request.getParameter("indication");
-		String hop= request.getParameter("hopital");
-		
-		String dateT= request.getParameter("dateTrait");
-		
-		String temp= request.getParameter("temps");
-		Chirurgie chig=null;
-		if(temp!=""){
+
+	public String ajoutTraitement() {
+		String doss = request.getParameter("dossier");
+		String indicat = request.getParameter("indication");
+		String hop = request.getParameter("hopital");
+
+		String dateT = request.getParameter("dateTrait");
+
+		String temp = request.getParameter("temps");
+		Chirurgie chig = null;
+		if (temp != "") {
 			int temps = Integer.parseInt(temp);
-			String date= request.getParameter("date");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String date = request.getParameter("date");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateChu = new Date();
 			try {
 				dateChu = sdf.parse(date);
@@ -98,50 +103,51 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String service= request.getParameter("service");
-			String typeExeres= request.getParameter("typeExerese");
+			String service = request.getParameter("service");
+			String typeExeres = request.getParameter("typeExerese");
 			int id_typeExerese = Integer.parseInt(typeExeres);
 			TypeExerese typeExerese = typeExDAO.trouverTypeExereseById(id_typeExerese);
-			String elargisement= request.getParameter("elargissement");
+			String elargisement = request.getParameter("elargissement");
 			int id_elarg = Integer.parseInt(elargisement);
-			Elargissement elargissement= elargDAO.trouverElargissementById(id_elarg);
-			String gest= request.getParameter("geste");
+			Elargissement elargissement = elargDAO.trouverElargissementById(id_elarg);
+			String gest = request.getParameter("geste");
 			int id_geste = Integer.parseInt(gest);
 			Geste geste = gestDAO.trouverGesteById(id_geste);
-			
-			String scorg= request.getParameter("scoring");
+
+			String scorg = request.getParameter("scoring");
 			int id_Scoring = Integer.parseInt(scorg);
 			RRscoring scoring = scoringDAO.trouverTumeurById(id_Scoring);
-			
-			String refChirg= request.getParameter("refChirg");
-			String complicationChirurg= request.getParameter("complicationChirurg");
-			Complication complication=null;
-			if(complicationChirurg!=""){
+
+			String refChirg = request.getParameter("refChirg");
+			String complicationChirurg = request.getParameter("complicationChirurg");
+			Complication complication = null;
+			if (complicationChirurg != "") {
 				int id_comp = Integer.parseInt(complicationChirurg);
 				complication = compDAO.trouverAspectMacroById(id_comp);
 			}
-			chig = new Chirurgie(refChirg, dateChu, service, temps, typeExerese, elargissement, geste, scoring, complication);
+			chig = new Chirurgie(refChirg, dateChu, service, temps, typeExerese, elargissement, geste, scoring,
+					complication);
 		}
-		TraitementEndoscopique traitEndo =null;
-		String typeInterv= request.getParameter("typeInterv");
-		if(typeInterv!=""){
+		TraitementEndoscopique traitEndo = null;
+		String typeInterv = request.getParameter("typeInterv");
+		if (typeInterv != "") {
 			int id_typeIntervention = Integer.parseInt(typeInterv);
-			TypeIntervention  intervention = typInterDAO.trouverTypeInterventionById(id_typeIntervention);
-			String refTrait= request.getParameter("refTrait");
-			String complicationTrait= request.getParameter("complicationTrait");
-			Complication complication=null;
-			if(complicationTrait!=""){
+			TypeIntervention intervention = typInterDAO.trouverTypeInterventionById(id_typeIntervention);
+			String refTrait = request.getParameter("refTrait");
+			String complicationTrait = request.getParameter("complicationTrait");
+			Complication complication = null;
+			if (complicationTrait != "") {
 				int id_comp = Integer.parseInt(complicationTrait);
 				complication = compDAO.trouverAspectMacroById(id_comp);
 			}
-			 traitEndo = new TraitementEndoscopique(refTrait, intervention, complication);
+			traitEndo = new TraitementEndoscopique(refTrait, intervention, complication);
 		}
-		Chimiotherapie chimio=null;
-		String deroulementChim= request.getParameter("deroulementChim");
-		if(deroulementChim!=""){
+		Chimiotherapie chimio = null;
+		String deroulementChim = request.getParameter("deroulementChim");
+		if (deroulementChim != "") {
 			Deroulement deroulement = Deroulement.valueOf(deroulementChim);
-			String dateDChim= request.getParameter("dateDebutChim");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String dateDChim = request.getParameter("dateDebutChim");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateDebutChim = new Date();
 			try {
 				dateDebutChim = sdf.parse(dateDChim);
@@ -149,8 +155,8 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String dateFChim= request.getParameter("dateFinChim");
-			
+			String dateFChim = request.getParameter("dateFinChim");
+
 			Date dateFinChim = new Date();
 			try {
 				dateFinChim = sdf.parse(dateFChim);
@@ -158,14 +164,14 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			 chimio = new Chimiotherapie(deroulement, dateDebutChim, dateFinChim);
+			chimio = new Chimiotherapie(deroulement, dateDebutChim, dateFinChim);
 		}
-		Radiotherapie radio=null;
-		String deroulementRadio= request.getParameter("deroulementRadio");
-		if(deroulementRadio!=""){
+		Radiotherapie radio = null;
+		String deroulementRadio = request.getParameter("deroulementRadio");
+		if (deroulementRadio != "") {
 			Deroulement deroulement = Deroulement.valueOf(deroulementRadio);
-			String dateDRad= request.getParameter("dateDebutRad");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String dateDRad = request.getParameter("dateDebutRad");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateDebutRad = new Date();
 			try {
 				dateDebutRad = sdf.parse(dateDRad);
@@ -173,7 +179,7 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String dateFRad= request.getParameter("dateFinRad");
+			String dateFRad = request.getParameter("dateFinRad");
 			Date dateFinRad = new Date();
 			try {
 				dateFinRad = sdf.parse(dateFRad);
@@ -183,69 +189,71 @@ public class ActionsTraitement {
 			}
 			radio = new Radiotherapie(deroulement, dateDebutRad, dateFinRad);
 		}
-		
-			int indication = Integer.parseInt(indicat);
-			int id_dossier =Integer.parseInt(doss);
-			DossierMedicale dossier = dosDAO.trouverDossierById(id_dossier);
-			int id_hopital =Integer.parseInt(hop);
-			Hopital hopital = hopDAO.trouverHopitalById(id_hopital);
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
-			Date dateTrait = new Date();
-			try {
-				dateTrait = sdf.parse(dateT);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
-			Traitement trait = new Traitement(dateTrait, indication, chig, traitEndo, chimio, radio, hopital, dossier);
-			traitDAO.addTraitement(trait);
-		
+
+		int indication = Integer.parseInt(indicat);
+		int id_dossier = Integer.parseInt(doss);
+		DossierMedicale dossier = dosDAO.trouverDossierById(id_dossier);
+		int id_hopital = Integer.parseInt(hop);
+		Hopital hopital = hopDAO.trouverHopitalById(id_hopital);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateTrait = new Date();
+		try {
+			dateTrait = sdf.parse(dateT);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Traitement trait = new Traitement(dateTrait, indication, chig, traitEndo, chimio, radio, hopital, dossier);
+		traitDAO.addTraitement(trait);
+
 		return "/ajoutTraitement.jsp";
 	}
-	public String suppTraitement(){
+
+	public String suppTraitement() {
 		String id_Patient = request.getParameter("id");
 		HttpSession session = request.getSession();
 		session.setAttribute("idPatient", id_Patient);
 		return "/suppTraitement.jsp";
 	}
-	public String modTraitement(){
+
+	public String modTraitement() {
 		String id_Patient = request.getParameter("id");
 		HttpSession session = request.getSession();
 		session.setAttribute("idPatient", id_Patient);
 		return "/modTraitement.jsp";
 	}
-	public String suppTraitementTrait(){
+
+	public String suppTraitementTrait() {
 		String ide = request.getParameter("id");
 		int id = Integer.parseInt(ide);
 		traitDAO.supprimerTraitement(id);
 		return "/suppTraitement.jsp";
 	}
-	public String modTrait(){
+
+	public String modTrait() {
 		String ide = request.getParameter("id");
-		int id = Integer.parseInt(ide);
-		Traitement trait = traitDAO.trouverTumeurById(id);
 		HttpSession sessionMod = request.getSession();
-		sessionMod.setAttribute("Traitement", trait);
+		sessionMod.setAttribute("idTrait", ide);
 		return "/modTraitementF.jsp";
 	}
-	public String  modTraitementTrait(){
-		
+
+	public String modTraitementTrait() {
 		String idTrait = request.getParameter("idTrait");
-		int idAncienTrait= Integer.parseInt(idTrait);
-		
-		String doss= request.getParameter("dossier");
-		String indicat= request.getParameter("indication");
-		String hop= request.getParameter("hopital");
-		
-		String dateT= request.getParameter("dateTrait");
-		
-		String temp= request.getParameter("temps");
-		Chirurgie chig=null;
-		if(temp!=""){
+		int idAncienTrait = Integer.parseInt(idTrait);
+
+		String doss = request.getParameter("dossier");
+		String indicat = request.getParameter("indication");
+		String hop = request.getParameter("hopital");
+
+		String dateT = request.getParameter("dateTrait");
+
+		String temp = request.getParameter("temps");
+		Chirurgie chig = null;
+		if (temp != "") {
 			int temps = Integer.parseInt(temp);
-			String date= request.getParameter("date");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String date = request.getParameter("date");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateChu = new Date();
 			try {
 				dateChu = sdf.parse(date);
@@ -253,50 +261,51 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String service= request.getParameter("service");
-			String typeExeres= request.getParameter("typeExerese");
+			String service = request.getParameter("service");
+			String typeExeres = request.getParameter("typeExerese");
 			int id_typeExerese = Integer.parseInt(typeExeres);
 			TypeExerese typeExerese = typeExDAO.trouverTypeExereseById(id_typeExerese);
-			String elargisement= request.getParameter("elargissement");
+			String elargisement = request.getParameter("elargissement");
 			int id_elarg = Integer.parseInt(elargisement);
-			Elargissement elargissement= elargDAO.trouverElargissementById(id_elarg);
-			String gest= request.getParameter("geste");
+			Elargissement elargissement = elargDAO.trouverElargissementById(id_elarg);
+			String gest = request.getParameter("geste");
 			int id_geste = Integer.parseInt(gest);
 			Geste geste = gestDAO.trouverGesteById(id_geste);
-			
-			String scorg= request.getParameter("scoring");
+
+			String scorg = request.getParameter("scoring");
 			int id_Scoring = Integer.parseInt(scorg);
 			RRscoring scoring = scoringDAO.trouverTumeurById(id_Scoring);
-			
-			String refChirg= request.getParameter("refChirg");
-			String complicationChirurg= request.getParameter("complicationChirurg");
-			Complication complication=null;
-			if(complicationChirurg!=""){
+
+			String refChirg = request.getParameter("refChirg");
+			String complicationChirurg = request.getParameter("complicationChirurg");
+			Complication complication = null;
+			if (complicationChirurg != "") {
 				int id_comp = Integer.parseInt(complicationChirurg);
 				complication = compDAO.trouverAspectMacroById(id_comp);
 			}
-			chig = new Chirurgie(refChirg, dateChu, service, temps, typeExerese, elargissement, geste, scoring, complication);
+			chig = new Chirurgie(refChirg, dateChu, service, temps, typeExerese, elargissement, geste, scoring,
+					complication);
 		}
-		TraitementEndoscopique traitEndo =null;
-		String typeInterv= request.getParameter("typeInterv");
-		if(typeInterv!=""){
+		TraitementEndoscopique traitEndo = null;
+		String typeInterv = request.getParameter("typeInterv");
+		if (typeInterv != "") {
 			int id_typeIntervention = Integer.parseInt(typeInterv);
-			TypeIntervention  intervention = typInterDAO.trouverTypeInterventionById(id_typeIntervention);
-			String refTrait= request.getParameter("refTrait");
-			String complicationTrait= request.getParameter("complicationTrait");
-			Complication complication=null;
-			if(complicationTrait!=""){
+			TypeIntervention intervention = typInterDAO.trouverTypeInterventionById(id_typeIntervention);
+			String refTrait = request.getParameter("refTrait");
+			String complicationTrait = request.getParameter("complicationTrait");
+			Complication complication = null;
+			if (complicationTrait != "") {
 				int id_comp = Integer.parseInt(complicationTrait);
 				complication = compDAO.trouverAspectMacroById(id_comp);
 			}
-			 traitEndo = new TraitementEndoscopique(refTrait, intervention, complication);
+			traitEndo = new TraitementEndoscopique(refTrait, intervention, complication);
 		}
-		Chimiotherapie chimio=null;
-		String deroulementChim= request.getParameter("deroulementChim");
-		if(deroulementChim!=""){
+		Chimiotherapie chimio = null;
+		String deroulementChim = request.getParameter("deroulementChim");
+		if (deroulementChim != "") {
 			Deroulement deroulement = Deroulement.valueOf(deroulementChim);
-			String dateDChim= request.getParameter("dateDebutChim");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String dateDChim = request.getParameter("dateDebutChim");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateDebutChim = new Date();
 			try {
 				dateDebutChim = sdf.parse(dateDChim);
@@ -304,8 +313,8 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String dateFChim= request.getParameter("dateFinChim");
-			
+			String dateFChim = request.getParameter("dateFinChim");
+
 			Date dateFinChim = new Date();
 			try {
 				dateFinChim = sdf.parse(dateFChim);
@@ -313,14 +322,14 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			 chimio = new Chimiotherapie(deroulement, dateDebutChim, dateFinChim);
+			chimio = new Chimiotherapie(deroulement, dateDebutChim, dateFinChim);
 		}
-		Radiotherapie radio=null;
-		String deroulementRadio= request.getParameter("deroulementRadio");
-		if(deroulementRadio!=""){
+		Radiotherapie radio = null;
+		String deroulementRadio = request.getParameter("deroulementRadio");
+		if (deroulementRadio != "") {
 			Deroulement deroulement = Deroulement.valueOf(deroulementRadio);
-			String dateDRad= request.getParameter("dateDebutRad");
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			String dateDRad = request.getParameter("dateDebutRad");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date dateDebutRad = new Date();
 			try {
 				dateDebutRad = sdf.parse(dateDRad);
@@ -328,7 +337,7 @@ public class ActionsTraitement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String dateFRad= request.getParameter("dateFinRad");
+			String dateFRad = request.getParameter("dateFinRad");
 			Date dateFinRad = new Date();
 			try {
 				dateFinRad = sdf.parse(dateFRad);
@@ -338,23 +347,30 @@ public class ActionsTraitement {
 			}
 			radio = new Radiotherapie(deroulement, dateDebutRad, dateFinRad);
 		}
-		
-			int indication = Integer.parseInt(indicat);
-			int id_dossier =Integer.parseInt(doss);
-			DossierMedicale dossier = dosDAO.trouverDossierById(id_dossier);
-			int id_hopital =Integer.parseInt(hop);
-			Hopital hopital = hopDAO.trouverHopitalById(id_hopital);
-			SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
-			Date dateTrait = new Date();
-			try {
-				dateTrait = sdf.parse(dateT);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
-			Traitement trait = new Traitement(dateTrait, indication, chig, traitEndo, chimio, radio, hopital, dossier);
-			traitDAO.modifierAnalyse(idAncienTrait, trait);
-		return "/modTraitement.jsp";
+
+		int indication = Integer.parseInt(indicat);
+		int id_dossier = Integer.parseInt(doss);
+		DossierMedicale dossier = dosDAO.trouverDossierById(id_dossier);
+		int id_hopital = Integer.parseInt(hop);
+		Hopital hopital = hopDAO.trouverHopitalById(id_hopital);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateTrait = new Date();
+		try {
+			dateTrait = sdf.parse(dateT);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Traitement trait = new Traitement(dateTrait, indication, chig, traitEndo, chimio, radio, hopital, dossier);
+		traitDAO.modifierAnalyse(idAncienTrait, trait);
+		return "/dossier.jsp";
+	}
+
+	public String consulTraitement() {
+		String id_Trait = request.getParameter("id");
+		HttpSession sessionMod = request.getSession();
+		sessionMod.setAttribute("idTrait", id_Trait);
+		return "/detailTraitement.jsp";
 	}
 }

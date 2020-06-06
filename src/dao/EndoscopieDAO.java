@@ -100,7 +100,6 @@ public class EndoscopieDAO {
 	    public Endoscopie trouverEndoById(int id){
 			EntityManager em = this.newEntityManager();
 			Endoscopie categorie = em.find(Endoscopie.class, id);
-	        
 	        this.closeEntityManager(em);
 	        return categorie;
 			

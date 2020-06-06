@@ -14,6 +14,7 @@ public class Polype extends AnaPathologie {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private int nombre;
 	@OneToOne
 	private Siege siege;
@@ -78,6 +79,10 @@ public class Polype extends AnaPathologie {
 	public void setLimite(LimiteResectEndo limite) {
 		this.limite = limite;
 	}
-	
+	@Override
+	public String toString() {
+		return "Polype [nombre=" + nombre + ", siege=" + siege + ", tupeHyst=" + tupeHyst + ", sousType=" + sousType
+				+ ", displasie=" + displasie + ", limite=" + limite + "]";
+	}
 
 }

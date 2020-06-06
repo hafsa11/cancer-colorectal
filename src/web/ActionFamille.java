@@ -60,6 +60,7 @@ public class ActionFamille {
 		int idAncien = Integer.parseInt(idAncienFamille);
 		String nomFamille = request.getParameter("nomFamille");
 		String diagnostic = request.getParameter("diagnostic");
+		System.out.println("diagnostic :"+diagnostic);
 		int id = Integer.parseInt(diagnostic);
 		
 		SyndromeFamilleDAO syndDAO = new SyndromeFamilleDAO();

@@ -1,5 +1,7 @@
 package dao.entities;
 
+import java.util.Arrays;
+
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
@@ -25,4 +27,12 @@ public class Administrateur extends Medecin{
 		super(nom, prenom, email, login, password, medecin, specialte, statut, hopital);
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public String toString() {
+		return "Administrateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", login="
+				+ login + ", password=" + password + ", photo=" + Arrays.toString(photo) + "]";
+	}
+	
+	
 }

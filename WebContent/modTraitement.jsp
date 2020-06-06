@@ -64,17 +64,13 @@
 				<div class="row">
                         <div class="col-sm-8 col-sm-offset-2">
                         	<%
-										String id_Patient = (String)session.getAttribute("idPatient");
-										int  idPatient = Integer.parseInt(id_Patient);
-										IndividuDAO indDAO = new IndividuDAO();
-										Individu patient = indDAO.trouverIndById(idPatient);
-										DossierDAO dosDAO = new DossierDAO();
-										List<Traitement> traitements = new ArrayList<>();
-										traitements = dosDAO.listerTraitementParPatient(idPatient);
-										 
+										 String id_Patient = (String)session.getAttribute("idPatient");
+                        	             int  idPat = Integer.parseInt(id_Patient);
+										 TraitementDAO traitDAO = new TraitementDAO();
+										 Traitement traitement = traitDAO.trouverTumeurById(idPat);
 									%>
                         	<div class="panel panel-default">
-								<div class="panel-heading"><h3 class="panel-title">traitment de <%=patient.getPrenom()%> <%=patient.getNom() %></h3></div>
+								<div class="panel-heading"><h3 class="panel-title">traitment de </h3></div>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div >
@@ -86,22 +82,18 @@
                                                             <th></th>
                                                         </tr>
                                                          
-                                                         <%
-                                                         	for(Traitement e: traitements){
-                                                         %>
+                                                       
                                         		
                                                     </thead>
                                                      <tbody> 
                                                     <tr>
                                                     	<td>Traitement </td>
-                                                     	<td>du <%=e.getDate()%></td> 
-                                                     	<td><a href="modTrait.chu?id=<%=e.getId()%>" onclick=""><button type="button" class="btn btn-info btn-custom waves-effect waves-light m-b-5" style="width:250px"  >Modifier</button></a></td> 
+                                                     	<td>du<%=traitement.getDate()%> </td> 
+                                                     	<td><a href="modTrait.chu?id=<%=traitement.getId()%>" onclick=""><button type="button" class="btn btn-info btn-custom waves-effect waves-light m-b-5" style="width:250px"  >Modifier</button></a></td> 
                                                         
                                                         </tr>             
                                                      </tbody>
-                                                     <%		
-                                        				}
-                                        			 %> 
+                                                    
                                                 </table>
                                             </div>
                                         </div>

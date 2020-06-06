@@ -71,6 +71,7 @@
 										DossierDAO dosDAO = new DossierDAO();
 										List<Biologie> analyses = new ArrayList<>();
 										analyses = dosDAO.listerBiologieParPatient(idPatient);
+										System.out.println("exames :"+analyses);
 										 
 									%>
                         	<div class="panel panel-default">

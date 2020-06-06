@@ -33,7 +33,7 @@
 						<div class="col-sm-2 col-xs-2 col-md-2 col-lg-2"></div></br></br>
                         <a href="gestionDossier.jsp"><button type="button" class="btn btn-success btn-custom waves-effect waves-light m-b-5" style="width:250px">Gestion Des Dossiers Medicales</button></a>
 						<div class="col-sm-2 col-xs-2 col-md-2 col-lg-2"></div></br></br>
-                        <a href="ajoutRendezVous.jsp"><button type="button" class="btn btn-info btn-custom waves-effect waves-light m-b-5" style="width:250px" >Gestion Des Rendez-Vous</button></a>
+                        <a href="listeRendezVous.jsp"><button type="button" class="btn btn-info btn-custom waves-effect waves-light m-b-5" style="width:250px" >Gestion Des Rendez-Vous</button></a>
 						<div class="col-sm-2 col-xs-2 col-md-2 col-lg-2"></div></br></br>
 						<a><button type="button" class="btn btn-purple btn-custom waves-effect waves-light m-b-5" style="width:250px" >Deconnexion</button></a>
                     </div>

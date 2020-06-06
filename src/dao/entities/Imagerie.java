@@ -1,6 +1,7 @@
 package dao.entities;
 
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -60,6 +61,12 @@ public class Imagerie extends ExamenMedical{
 	}
 	public void setImage(Byte[] image) {
 		this.image = image;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Imagerie [examen=" + examen + ", dateRadio=" + dateRadio + ", image=" + Arrays.toString(image) + "]";
 	}
 	
     

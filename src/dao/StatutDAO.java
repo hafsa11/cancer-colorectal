@@ -15,6 +15,7 @@ import dao.entities.Individu;
 import dao.entities.M;
 import dao.entities.N;
 import dao.entities.PriseEnCharge;
+import dao.entities.RendezVous;
 import dao.entities.Site;
 import dao.entities.StatutCancereux;
 import dao.entities.T;
@@ -179,4 +180,26 @@ public class StatutDAO {
 		        }
 		        return syndrome;
 	    }
+	 public boolean modifierStatut(int id_AncienStatut,StatutCancereux newStatut){
+		    EntityManager em = this.newEntityManager();
+		        try {
+		        	StatutCancereux AncienStatut = em.find(StatutCancereux.class, id_AncienStatut);
+		        	em.detach(AncienStatut);
+		        	AncienStatut.setTypeStatut(newStatut.getTypeStatut());
+		        	AncienStatut.setAnnee(newStatut.getAnnee());
+		        	AncienStatut.setAge(newStatut.getAge());
+		        	AncienStatut.setSite(newStatut.getSite());
+		        	AncienStatut.setType(newStatut.getType());
+		        	AncienStatut.setT(newStatut.getT());
+		        	AncienStatut.setM(newStatut.getM());
+		        	AncienStatut.setN(newStatut.getN());
+		        	AncienStatut.setPriseEncharge(newStatut.getPriseEncharge());
+		        	em.merge(AncienStatut);
+		            this.closeEntityManager(em);
+		            return true;
+		        } catch (Exception e) {
+		            this.closeEntityManager(em);
+		            return false; 
+		        }
+	}
 }

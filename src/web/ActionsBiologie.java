@@ -70,7 +70,7 @@ public class ActionsBiologie {
 		
 		Biologie bio= new Biologie(hopital, dossier, analyse, valeur, dateBiologie);
 		bioDAO.ajouterAnalyse(bio);
-		return "/ajoutBiologie.jsp";
+		return "/dossier.jsp";
 	}
 	public String suppBiologie(){
 		String id_Patient = request.getParameter("id");
@@ -126,6 +126,14 @@ public class ActionsBiologie {
 		
 		Biologie bio= new Biologie(hopital, dossier, analyse, valeur, dateBiologie);
 		bioDAO.modifierAnalyse(idAncienBiologie, bio);
-		return "/modBiologie.jsp";
+		return "/dossier.jsp";
+	}
+	public String consultBiologie() {
+		String ide = request.getParameter("id");
+		int id = Integer.parseInt(ide);
+		Biologie biologie = bioDAO.trouverBiologieById(id);
+		HttpSession sessionMod = request.getSession();
+		sessionMod.setAttribute("Biologie", biologie);
+		return "detailBiologie.jsp";
 	}
 }

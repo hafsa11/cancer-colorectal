@@ -1,11 +1,13 @@
 package web;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -208,6 +210,12 @@ public class ActionExamenClinique {
 			HttpSession sessionMod = request.getSession();
 			sessionMod.setAttribute("ExamenPostOp", examen);
 			return "/modExamenCliniquePost.jsp";
+		}
+		
+		public String modPreOpe() {
+			String idPreOP = request.getParameter("id");
+			
+			return "/modExamenPreOP.jsp";
 		}
 		public String consExamenCliniquePost(){
 			String ide = request.getParameter("id");
@@ -443,6 +451,44 @@ public class ActionExamenClinique {
 			this.response = response;
 		}
 		
+		public String modExamePre(){
+			String idExamen = request.getParameter("idExamen");
+			int idAncienExamen= Integer.parseInt(idExamen);
+			String doss = request.getParameter("dossier");
+			int id_dossier =Integer.parseInt(doss);
+			DossierMedicale dossier = dosDAO.trouverDossierById(id_dossier);
+			String hop = request.getParameter("hopital");
+			int id_hopital =Integer.parseInt(hop);
+			Hopital hopital = hopDAO.trouverHopitalById(id_hopital);
+			String date = request.getParameter("dateexamen");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+			Date journeyDate = null;
+			try {
+				journeyDate = new java.sql.Date(df.parse(date).getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			String pds = request.getParameter("poids");
+			Float poids = Float.parseFloat(pds);
+			String tail = request.getParameter("taille");
+			Float taille = Float.parseFloat(tail);
+			String imc = request.getParameter("imc");
+			Float iMC = Float.parseFloat(imc);
+			String oms = request.getParameter("oms");
+			Float oMS = Float.parseFloat(oms);
+			
+
+			String type = request.getParameter("typeExamen");
+			TypeExamen typeExamen = TypeExamen.valueOf(type);
+				
+				ExamenPreOp examenNormal = new ExamenPreOp(hopital, dossier, journeyDate, poids, taille, oMS, iMC, typeExamen);
+     			System.out.println("test "+idAncienExamen+ " " + id_dossier + " " +hop+ " " +pds+ " " +tail+ " " +imc+ " " + oms);
+				examenAnoDAO.modifierExamenPreOp(idAncienExamen, examenNormal);
+				//examPostDAO.modifierExamenClinique(idAncienExamen, examenNormal);
+		
+			return "/dossier.jsp";
+		}
 	
 
 }

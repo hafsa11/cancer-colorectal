@@ -1,8 +1,10 @@
 package web;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,33 +48,29 @@ public class ActionsRendezVous {
 		String pat = request.getParameter("patient");
 		int id = Integer.parseInt(pat);
 		Individu patient = indDAO.trouverIndById(id);
-		
-		String date = request.getParameter("dateRendez");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
-		Date dateRendez = new Date();
+		String date =request.getParameter("dateRDV");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		Date journeyDate = null;
 		try {
-			dateRendez = sdf.parse(date);
+			journeyDate = new java.sql.Date(df.parse(date).getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		String objet = request.getParameter("objet");
-		String heure = request.getParameter("heure");
-
-		String note = request.getParameter("note");
-		RendezVous rendez = new RendezVous(dateRendez, heure, objet, note, patient);
+		} 
+		String objet = request.getParameter("objRDV");
+		String heure = request.getParameter("hrRDV");
+		String note = request.getParameter("ntRDV");
+		RendezVous rendez = new RendezVous(journeyDate, heure, objet, note, patient);
 		
 		rendDAO.ajouterRendez(rendez);
-		return "/formRendezVous.jsp";
+		return "/ajoutRendezVous.jsp";
 	}
 	public String suppRend(){
 		String idy = request.getParameter("id");
 		int id = Integer.parseInt(idy);
 		rendDAO.supprimerRendez(id);
 		
-		return "/suppRendezVous.jsp";
+		return "/ajoutRendezVous.jsp";
 	}
 	public String rechercheRendezVousMod(){
 		String id = request.getParameter("individu");
@@ -131,25 +129,29 @@ public class ActionsRendezVous {
 		String pat = request.getParameter("patient");
 		int id = Integer.parseInt(pat);
 		Individu patient = indDAO.trouverIndById(id);
-		
-		String date = request.getParameter("dateRendez");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
-		Date dateRendez = new Date();
+		String date =request.getParameter("dateRDV");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		Date journeyDate = null;
 		try {
-			dateRendez = sdf.parse(date);
+			journeyDate = new java.sql.Date(df.parse(date).getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		String objet = request.getParameter("objet");
-		String heure = request.getParameter("heure");
-
-		String note = request.getParameter("note");
-		RendezVous rendez = new RendezVous(dateRendez, heure, objet, note, patient);
+		} 
+		String objet = request.getParameter("objRDV");
+		String heure = request.getParameter("hrRDV");
+		String note = request.getParameter("ntRDV");
+		RendezVous rendez = new RendezVous(journeyDate, heure, objet, note, patient);
 		
 		rendDAO.modifierRendez(Ancienid, rendez);
-		return "/modRendeVous.jsp";
+		return "/ajoutRendezVous.jsp";
 	}
+	
+	 public String modRendezVous(){
+		 
+			String idRDV = request.getParameter("id");
+			HttpSession session = request.getSession();
+			session.setAttribute("idRDV", idRDV);
+			return "/formRDV.jsp";
+		}
 }

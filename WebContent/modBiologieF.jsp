@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
@@ -71,16 +72,15 @@
 										<div class="col-md-7 col-lg-offset-3">
 										<div class="panel-body">
 											<%
-												String id_Dossier = (String)session.getAttribute("idDossier");
-												int  idDossier = Integer.parseInt(id_Dossier);
-												DossierDAO dosDAO = new DossierDAO();
-												DossierMedicale dos = dosDAO.trouverDossierById(idDossier);
-												
-												Biologie examen = (Biologie)session.getAttribute("Biologie");
+												Biologie examen = (Biologie)session.getAttribute("Genetique");
+												Date date = examen.getDataeAnalyse();
+												SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+												SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yyyy");
+												String dateFormatee = formatDateJour.format(date);
 											
 											%>
 		                                    <div class="form-group">
-		                                         <input type="hidden" class="form-control" name="dossier" value="<%=dos.getId()%>"  style="width:250px">
+		                                         <input type="hidden" class="form-control" name="dossier" value="<%=examen.getDossier().getId()%>"  style="width:250px">
 		                                    </div>
 		                                    <div class="form-group">
 		                                         <input type="hidden" class="form-control" name="idBiologie" value="<%=examen.getId()%>"  style="width:250px">
@@ -95,10 +95,11 @@
 											            %>
 											            
 														<select class="form-control" name="hopital" style="width:250px" required>
+														
 														<% 
 				                                			for(Hopital hop : hopitaux ){
 				                                		%>	
-				                                			    <option value ="<%=hop.getId() %>"><%=hop %></option>
+				                                			    <option value ="<%=hop.getId() %>"><%=hop.getHopital() %></option>
 				                                		<% 
 				                                			}
 				                                		%>  
@@ -114,10 +115,10 @@
 											            	medecins=medDAO.listerLesMedecin();
 											            %>
                                                     <select class="form-control" name="medecin" style="width:250px" required>
-                                                       <% 
+                                                     <% 
 				                                			for(Medecin med : medecins ){
 				                                		%>	
-				                                			    <option value ="<%=med.getId() %>"><%=med %></option>
+				                                			    <option value ="<%=med.getId() %>"><%=med.getMedecin() %></option>
 				                                		<% 
 				                                			}
 				                                		%>  
@@ -128,16 +129,16 @@
                                             <div class="form-group">
                                                 <label for="dateexamen" class="col-sm-4 form-control-label">Date d'examen:</label>
                                                 
-                                                  <input type="text" name="dateBiologie" placeholder="<%=examen.getDataeAnalyse() %>" class="form-control" id="dateexamen" style="width:250px" required>
+                                                  <input type="text" name="dateBiologie" value="<%=dateFormatee %>" class="form-control" id="dateexamen" style="width:250px" required>
                                                 
                                             </div> 
 											<div class="form-group">
                                                 <label for="" class="col-sm-2 form-control-label" >Analyse</label>
-                                                <input type="text" class="form-control" placeholder="<%=examen.getAnalyse() %>"  name="analyse" id="" style="width:250px"  required >
+                                                <input type="text" class="form-control" value="<%=examen.getAnalyse() %>"  name="analyse" id="" style="width:250px"  required >
                                             </div>
                                             <div class="form-group">
                                                 <label for="" class="col-sm-2 form-control-label" >Valeur</label>
-                                                <input type="text" class="form-control" name="valeur" id=""  placeholder="<%=examen.getValeur() %>" style="width:250px" required >
+                                                <input type="text" class="form-control" name="valeur" id=""  value="<%=examen.getValeur() %>" style="width:250px" required >
                                             </div>
 														
 										</div>

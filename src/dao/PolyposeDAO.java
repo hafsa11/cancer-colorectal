@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import dao.entities.Endoscopie;
 import dao.entities.Polypose;
 
 public class PolyposeDAO {
@@ -86,5 +87,12 @@ public class PolyposeDAO {
 	        List<Polypose> polyposes = query.getResultList();
 	        this.closeEntityManager(em);
 	        return polyposes;
-	    }
+	 }
+	 
+	 public Polypose listerPolyposeById(int id){
+	    	EntityManager em = this.newEntityManager();
+	        Polypose polypose = em.find(Polypose.class, id);
+	        this.closeEntityManager(em);
+	        return polypose;
+	 }
 }

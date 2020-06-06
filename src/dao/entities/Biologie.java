@@ -54,6 +54,11 @@ public class Biologie extends ExamenMedical {
 	public void setDataeAnalyse(Date dataeAnalyse) {
 		this.dataeAnalyse = dataeAnalyse;
 	}
+
+	@Override
+	public String toString() {
+		return "Biologie [analyse=" + analyse + ", valeur=" + valeur + ", dataeAnalyse=" + dataeAnalyse + "]";
+	}
 	    
 	}
 

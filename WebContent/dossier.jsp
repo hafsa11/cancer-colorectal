@@ -156,7 +156,7 @@
                                                     <tr>
                                                     	<td>Examen clinique</td>
                                                      	<td>du <%=dateFormatee%></td> 
-                                                     	<td><a href="consExamenCliniqueNormal.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Détail</a>  <a  href="modExamenPre.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i> Modifier </a></td>
+                                                     	<td><a href="consExamenCliniqueNormal.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Détail</a>  <a  href="modExamPre.jsp?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i> Modifier </a></td>
                                                         </tr>             
                                                      </tbody>
                                                      <%		
@@ -391,7 +391,7 @@
                                                     <tr>
                                                     	<td>Imagerie </td>
                                                      	<td>du <%=dateFormatee %></td> 
-                                                     	<td><a href="consImagerie.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modImagerie.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
+                                                     	<td><a href="consImagerie.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modImag.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
                                                         
                                                         </tr>             
                                                      </tbody>
@@ -443,7 +443,7 @@
                                                     <tr>
                                                     	<td>Analyse médical </td>
                                                      	<td>du <%=dateFormatee %></td> 
-                                                     	<td><a href="consBiologie.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modBiologie.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
+                                                     	<td><a href="consBiologie.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modBiol.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
                                                         
                                                         </tr>             
                                                      </tbody>
@@ -493,7 +493,7 @@
                                                     <tr>
                                                     	<td>Examen génetique  </td>
                                                      	<td> numéro <%=numero %></td> 
-                                                     	<td><a href="consGenetique.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modGenetique.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
+                                                     	<td><a href="consGenetique.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Detail</a> <a href="modGen.chu?id=<%=e.getId()%>" ><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
                                                         
                                                         </tr>             
                                                      </tbody>
@@ -546,7 +546,7 @@
                                                     <tr>
                                                     	<td>Traitement </td>
                                                      	<td>du <%=dateFormatee%></td> 
-                                                     	<td><a href="consTraitement.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Détail</a>  <a href="modTraitement.chu?id=<%=e.getId()%>"><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
+                                                     	<td><a href="consTraitement.chu?id=<%=e.getId()%>" ><i class="fa fa-eye" ></i>Détail</a>  <a href="modTrait.chu?id=<%=e.getId()%>"><i class="fa fa-pencil-square-o"></i>Modifier</a></td> 
                                                         
                                                         </tr>             
                                                      </tbody>

@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-
+import javax.servlet.http.HttpSession;
 
 import dao.entities.Individu;
 import dao.entities.RendezVous;

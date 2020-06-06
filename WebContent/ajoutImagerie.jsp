@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*" %>
-<%@ page import="dao.*" %>
-<%@ page import="dao.entities.*" %>
-<%@ page import="beans.*" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*"%>
+<%@ page import="dao.*"%>
+<%@ page import="dao.entities.*"%>
+<%@ page import="beans.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -61,12 +61,11 @@
 						<a href="Traitement.jsp"><button type="button" class="btn btn-default btn-rounded waves-effect m-b-5" style="width:150px">Traitement</button></a>
                     </div>                       
                 </div>
-				<div class="row">
+					<div class="row">
                         <div class="col-sm-12">
-                        	
                         	<div class="panel panel-default">
 								<div class="panel-heading"><h3 class="panel-title">Radiologie</h3></div>
-								<form class="form-horizontal" role="form" action="ajoutImagerie.chu" method="post" enctype="multipart/form-data">
+								<form class="form-horizontal" role="form" action="ajoutImagerie.chu" method="post">
                                     <div class="row">
 										<div class="col-md-7 col-lg-offset-3">
 										<div class="panel-body">
@@ -124,7 +123,7 @@
                                                 <label class="col-sm-2 form-control-label">Examen:</label>
                                                 <div class="col-sm-8">
                                                 <%
-                                                ExamenImagerieDAO examenDAO = new ExamenImagerieDAO();
+                                                            ExamenImagerieDAO examenDAO = new ExamenImagerieDAO();
 											            	List<ExamenImagerie> examens = new ArrayList<>();
 											            	examens = examenDAO.listerExamenImagerie();
 											            %>
@@ -139,7 +138,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-											
                                             <div class="form-group">
                                                 <label for="dateexamen" class="col-sm-4 form-control-label">Date d'examen:</label>
                                                 
@@ -167,7 +165,6 @@
 						
                 </div>		
                </div> <!-- col -->
-				
 				
 				
         </div>
